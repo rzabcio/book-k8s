@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alpaca-prod
+  labels:
+    ver: "1"
+    app: "alpaca"
+    env: "prod"
+spec:
+  replicas: 3
+  selector:
+    matchLabels: 
+      ver: "1"
+      app: "alpaca"
+      env: "prod"
+  template:
+    metadata:
+      labels:
+        ver: "1"
+        app: "alpaca"
+        env: "prod"
+    spec:
+      containers:
+      - name: alpaca-prod
+        image: gcr.io/kuar-demo/kuard-amd64:blue
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          periodSeconds: 2
+          initialDelaySeconds: 0
+          failureThreshold: 3
+          successThreshold: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alpaca-prod
+  labels:
+    ver: "1"
+    app: "alpaca"
+    env: "prod"
+spec:
+  # type: NodePort
+  type: LoadBalancer
+  ports:
+  - port: 8080
+    # targetPort: 8080
+    protocol: TCP
+    # name: http
+    nodePort: 30000
+  selector:
+    ver: "1"
+    app: "alpaca"
+    env: "prod"
+

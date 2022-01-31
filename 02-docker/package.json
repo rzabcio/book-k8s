@@ -1,0 +1,13 @@
+{
+	"name": "simple-node",
+	"version": "1.0.0",
+	"description": "Example app for K8s book",
+	"main": "server.js",
+	"dependencies": {
+		"express": "*"
+	},
+	"scripts": {
+		"start": "node server.js"
+	},
+	"author": ""
+}

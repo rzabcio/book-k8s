@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bandicoot
+  labels:
+    app: "bandicoot"
+spec:
+  replicas: 3
+  selector:
+    matchLabels: 
+      app: "bandicoot"
+  template:
+    metadata:
+      labels:
+        app: "bandicoot"
+    spec:
+      containers:
+      - name: bandicoot
+        image: gcr.io/kuar-demo/kuard-amd64:green
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          periodSeconds: 2
+          initialDelaySeconds: 0
+          failureThreshold: 3
+          successThreshold: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bandicoot
+  labels:
+    app: "bandicoot"
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: "bandicoot"
+

@@ -1,0 +1,6 @@
+[submodule "02-kuard/kuard"]
+	path = 02-kuard/kuard
+	url = https://github.com/kubernetes-up-and-running/kuard.git
+[submodule "08-ingress/contour"]
+	path = 08-ingress/contour
+	url = https://github.com/projectcontour/contour.git
