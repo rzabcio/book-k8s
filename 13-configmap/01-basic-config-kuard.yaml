@@ -33,6 +33,9 @@ spec:
         name: basic-config
   restartPolicy: Never
 
+
+
+
 ---
 apiVersion: v1
 kind: Service
